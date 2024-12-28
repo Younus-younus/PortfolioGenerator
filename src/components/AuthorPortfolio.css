@@ -1,0 +1,65 @@
+.container1 {
+    display: flex;
+    flex-direction: row;
+    margin: 0px !important;
+    padding: 0 !important;
+    height: 100vh;
+}
+.container {
+    display: flex;
+    flex-direction: row;
+    margin: 0 0 0 0 !important;
+    padding: 0 !important;
+}
+.leftPanel {
+    display: flex;
+    flex-direction: column;
+    width: 370px !important;
+    background-color: #0F1D2F;
+    margin-left: 0;
+    align-items: center;
+    position: fixed;
+    height: 100%;
+}
+.leftPanel p {
+    opacity: 0.8;
+}
+.leftPanel p:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.image{
+    width: 259px;
+    height: 248px;
+    border: 1px solid #ffffff;
+    border-radius: 50%;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+.rightPanel {
+    height: 100vh;
+    margin-left: 20rem;
+    margin-top: 2rem;
+}
+.rightPanel li {
+    opacity: 0.8;
+    font-size: medium;
+    margin-left: 3rem;
+}
+.rightPanel h6{
+    margin-top: 1rem;
+}
+.rightPanel h5{
+    opacity: 0.5;
+    font-size: medium;
+}
+button {
+    margin-bottom: 0.5rem;
+    opacity: 0.5;
+}
+button:hover {
+    opacity: 1;
+}

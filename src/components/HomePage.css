@@ -1,0 +1,9 @@
+.card {
+    background-color: #11253d !important;
+}
+a {
+    text-decoration: none;
+}
+.lists:hover {
+    opacity: 0.7;
+}

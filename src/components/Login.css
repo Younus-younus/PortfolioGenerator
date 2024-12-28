@@ -1,0 +1,9 @@
+.loginForm {
+    width: 30%;
+    border: 1px solid white;
+    border-radius: 0.8rem;
+    padding: 1rem;
+}
+.hide-show {
+    border: none;
+}

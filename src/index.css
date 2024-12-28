@@ -1,0 +1,12 @@
+* {
+  color: white !important;
+  font-size: 20px;
+}
+body {
+  background-color: #021526;
+}
+
+input, textarea {
+  color: black !important; /* Input text color */
+  background-color: white !important; /* Input background color */
+}
