@@ -9,13 +9,6 @@ const router = express.Router();
 
 router.post('/portfolio', upload.single('image'),isLoggedIn,newPortfolio);
 router.get('/portfolios',Portfolios)
-router.get("/:id", async (req, res) => {
-    try {
-        await show(req, res);
-    } catch (error) {
-        console.error("Error in GET /:id:", error);
-        res.status(500).json({ error: "Something went wrong" });
-    }
-});
+router.get("/portfolio/:id",show);
 
 export default router;

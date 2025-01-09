@@ -1,9 +1,12 @@
 import './HomePage.css';
 import React, { useEffect, useState } from 'react';
 import logo from "../assets/Logo.jpg"
+import { Link } from "react-router-dom";
+import MyLoader from "./MyLoader";
 
 export default function Portfolios() {
     const [portfolios, setPortfolios] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
@@ -15,15 +18,18 @@ export default function Portfolios() {
             } catch (error) {
                 console.error('Error fetching portfolios:', error);
                 setError(error.message);
+            }finally {
+                setLoading(false);
             }
         };
         fetchPortfolios();
     }, []);
-
     
     useEffect(() => {
         console.log('Portfolios state:', portfolios);
     }, [portfolios]);
+    if (loading) return <><MyLoader></MyLoader></>;
+
     return (
         <div className='mt-3'>
         <a href="/author-portfolio">
@@ -35,7 +41,7 @@ export default function Portfolios() {
                                 <div className="col-md-9">
                                     <div className="card-body">
                                         <h5 className="card-title">Younus</h5>
-                                        <p className="card-text">
+                                        <p className="card-text opacity-50">
                                             FullStack Developer
                                         </p>
                                         <span>
@@ -48,25 +54,26 @@ export default function Portfolios() {
                     </a>
         {portfolios.map((portfolio, index) => {
             return(
-            <a href={`/api/resumes/${portfolio.id}`} key={portfolio.id}>
+                <Link to={`/portfolio/${portfolio.id}`} key={portfolio.id}>
                 <div className="card mb-3 mx-5 lists">
                     <div className="row g-0">
                         <div className="col-md-2">
-                            <img src={portfolio.image_url} className="img-fluid rounded-start " alt="..." />
+                            <img src={`http://localhost:5001/${portfolio.image_url}`} className="img-fluid rounded-start image-porfolio" alt="..." />
                         </div>
                         <div className="col-md-6">
                             <div className="card-body">
                                 <h5 className="card-title">{portfolio.name}</h5>
-                                <p className="card-text">{portfolio.describeYou}</p>
+                                <p className="card-text opacity-50">{portfolio.describeYou}</p>
                                 <span>
-                                    <p><i className="fa-regular fa-thumbs-up"></i> {portfolio.like_count}</p>
+                                    <span><i className="fa-regular fa-thumbs-up"></i> {portfolio.like_count}</span>
+                                    &nbsp;&nbsp;&nbsp;
                                     <i>View This</i>&nbsp; <i className="fa-solid fa-arrow-up-right-from-square"></i>
                                 </span>
                             </div>
                         </div>
                     </div>
                 </div>
-            </a>
+            </Link>
             )
     })}
 </div>

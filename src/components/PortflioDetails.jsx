@@ -1,7 +1,10 @@
-import './AuthorPortfolio.css';
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import MyLoader from "./MyLoader";
 
-const PortfolioDetails = ({ portfolioId }) => {
+const PortfolioDetails = () => {
+    const { id } = useParams(); // Get the dynamic id from the URL
     const [portfolio, setPortfolio] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -9,29 +12,37 @@ const PortfolioDetails = ({ portfolioId }) => {
     useEffect(() => {
         const fetchPortfolio = async () => {
             try {
-                const response = await axios.get("http://localhost:5001/api/resumes/:id");
-                const data = await response.json();
-                setPortfolio(data);
+                const response = await axios.get(`http://localhost:5001/api/resumes/portfolio/${id}`);
+                setPortfolio(response.data.portfolio);
             } catch (err) {
-                setError(err.response?.data?.error || err.message);
+                setError(err.message || "Error fetching portfolio.");
             } finally {
                 setLoading(false);
             }
         };
 
         fetchPortfolio();
-    }, [portfolioId]);
+    }, [id]);
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <><MyLoader></MyLoader></>;
     if (error) return <p>Error: {error}</p>;
     return (
         <div className="container">
             <div className="container1">
                 <div className="leftPanel">
                     <div>
-                        {portfolio.images.map((image) => (
-                            <img key={image.id} src={image.imageUrl} alt="Profile" className="image" />
-                        ))}
+                        {portfolio.images?.length > 0 ? (
+                            portfolio.images.map(image => (
+                                <img
+                                    key={image.id}
+                                    src={`http://localhost:5001/${image.imageUrl}`}
+                                    alt={image.imageName}
+                                    className="image"
+                                />
+                            ))
+                        ) : (
+                            <p>No images available</p>
+                        )}
                     </div>
                     <div>
                         <button
@@ -78,66 +89,70 @@ const PortfolioDetails = ({ portfolioId }) => {
                 </div>
                 <div className="rightPanel">
                     <div>
-                        <h2>{portfolio.portfolio.name}</h2>
-                        <h5>{portfolio.portfolio.describeYou}</h5>
+                        <h2>{portfolio.name || "Portfolio Name"}</h2>
+                        <h5>{portfolio.describeYou || "No description available"}</h5>
                     </div>
                     <div id="contact">
-                        <h6>Description</h6>
+                    <h6>Description</h6>
                         <p>
-                            {portfolio.portfolio.description}
+                        {portfolio.description || "No description available"}
                         </p>
                     </div>
                     <hr />
                     <div>
-                        <h6 id="education">Contact Info</h6>
+                        <h6>Contact Info</h6>
                         <ul>
-                            <li><strong>Gmail:</strong>{contact.gmail}</li>
-                            <li><strong>Phone:</strong>{contact.contact}</li>
-                            <li><strong>Address:</strong>{contact.address}</li>
+                            <li><strong>Gmail:</strong> {portfolio.contact?.gmail || "N/A"}</li>
+                            <li><strong>Phone:</strong> {portfolio.contact?.contact || "N/A"}</li>
+                            <li><strong>Address:</strong> {portfolio.contact?.address || "N/A"}</li>
                         </ul>
                     </div>
                     <hr />
-                    <div>
-                        <h6 id="expertise">Education Info</h6>
+                    <div id="education">
+                        <h6>Education Info</h6>
                         <ul>
-                            <li><strong>College:</strong>{education.institute}</li>
-                            <li><strong>Course:</strong>{institute.course}</li>
+                            <li><strong>Institute:</strong> {portfolio.education?.institute || "N/A"}</li>
+                            <li><strong>Course:</strong> {portfolio.education?.course || "N/A"}</li>
                         </ul>
                     </div>
                     <hr />
-                    <div>
-                        <h6 id="interest">Skills</h6>
+                    <div id="expertise">
+                        <h6>Skills and Expertise</h6>
                         <ul>
-                            <li>
-                                {portfolio.skills.map((skill) => (
-                                    <li key={skill.id}>{skill.name}</li>
-                                ))}
-                            </li>
+                            {portfolio.skills?.length > 0 ? (
+                                portfolio.skills.map(skill => <li key={skill.id}>{skill.skill}</li>)
+                            ) : (
+                                <li>No skills listed</li>
+                            )}
                         </ul>
                     </div>
                     <hr />
-                    <div>
-                        <h6 id="language">Interests</h6>
+                    <div id="interest">
+                        <h6>Interests</h6>
                         <ul>
-                            {portfolio.interests.map((interest) => (
-                                <li key={interest.id}>{interest.name}</li>
-                            ))}
+                            {portfolio.interest?.length > 0 ? (
+                                portfolio.interest.map(interest => <li key={interest.id}>{interest.name}</li>)
+                            ) : (
+                                <li>No interests available</li>
+                            )}
                         </ul>
                     </div>
                     <hr />
-                    <div>
+                    <div id="language">
                         <h6>Languages Known</h6>
                         <ul>
-                            {portfolio.languages.map((lang) => (
-                                <li key={lang.id}>{lang.name}</li>
-                            ))}
+                            {portfolio.languages?.length > 0 ? (
+                                portfolio.languages.map(lang => <li key={lang.id}>{lang.language}</li>)
+                            ) : (
+                                <li>No languages listed</li>
+                            )}
                         </ul>
                     </div>
                     <br />
                 </div>
             </div>
         </div>
-    );
+    );    
 }
 
 export default PortfolioDetails;

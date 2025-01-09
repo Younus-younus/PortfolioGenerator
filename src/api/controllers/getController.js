@@ -16,7 +16,7 @@ export const Portfolios = async (req, res) => {
 
         const portfolioData = portfolios.map((portfolio) => ({
             ...portfolio,
-            image_url: portfolio.images?.[0]?.imageUrl || 'default_placeholder.jpg',
+            image_url: portfolio.images?.[0]?.imageUrl,
             like_count: portfolio._count.likes,
             describeYou: portfolio.describeYou,
         }));
@@ -31,14 +31,15 @@ export const Portfolios = async (req, res) => {
 
 export const show = async (req, res) => {
     const { id } = req.params;
+    const parsedId = id;
 
-    if (!id || isNaN(parseInt(id))) {
+    if (!parsedId) {
         return res.status(400).json({ error: 'Invalid portfolio ID' });
     }
 
     try {
         const portfolio = await prisma.portfolio.findUnique({
-            where: { id },
+            where: { id: parsedId },
             include: {
                 contact: true,
                 education: true,
@@ -53,38 +54,29 @@ export const show = async (req, res) => {
             return res.status(404).json({ error: 'Portfolio not found' });
         }
 
-        const [images, contacts, educations, skills, interests, languages] = await Promise.all([
-            prisma.image.findMany({ where: { portfolioId: id }, take: 5 }),
-            prisma.contact.findMany({ where: { portfolioId: id }, take: 5 }),
-            prisma.education.findMany({ where: { portfolioId: id }, take: 5 }),
-            prisma.skill.findMany({ where: { portfolioId: id }, take: 5 }),
-            prisma.interest.findMany({ where: { portfolioId: id }, take: 5 }),
-            prisma.language.findMany({ where: { portfolioId: id }, take: 5 }),
-        ]);
-
         const userId = req.user?.id || null;
         const hasLiked = userId
             ? await prisma.like.findFirst({
-                where: { userId, portfolioId: id },
+                where: { userId, portfolioId: parsedId },
             })
             : null;
-
         res.setHeader('Content-Type', 'application/json');
-        res.status(200).json({
+        res.json({
             portfolio,
-            images,
-            contact: contacts,
-            education: educations,
-            skills,
-            interests,
-            languages,
+            contact: portfolio.contact,
+            education: portfolio.education,
+            skills: portfolio.skills,
+            interests: portfolio.interest,
+            languages: portfolio.languages,
+            images: portfolio.images,
             hasLiked: !!hasLiked,
         });
+        
     } catch (error) {
         console.error('Error fetching portfolio:', {
             error: error.message,
             stack: error.stack,
-            portfolioId: id,
+            portfolioId: parsedId,
         });
         res.status(500).json({ error: `Error fetching portfolio: ${error.message}` });
     }

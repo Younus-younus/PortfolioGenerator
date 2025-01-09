@@ -43,8 +43,8 @@ export default function NavBar() {
                         </li>
                         <li className="nav-item">
                             <Link
-                                className={`nav-link ${location.pathname === "/api/resumes/portfolios" ? "active" : ""}`}
-                                to="/api/resumes/portfolios"
+                                className={`nav-link ${location.pathname === "/portfolios" ? "active" : ""}`}
+                                to="/portfolios"
                             >
                                 Portfolio's
                             </Link>
