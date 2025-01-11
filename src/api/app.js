@@ -1,14 +1,10 @@
 import express from "express";
-import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes.js";
 import resumeRoutes from "./routes/resumeRoutes.js";
 import path from "path";
 import cors from "cors";
 import multer from "multer";
-import methodOverride from "method-override";
-import { v4 as uuidv4 } from "uuid";
-import flash from "connect-flash";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient({
