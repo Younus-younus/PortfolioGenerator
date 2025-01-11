@@ -1,4 +1,5 @@
 import './AuthorPortfolio.css';
+import logo from "../assets/Logo.jpg"
 
 export default function AuthorPortfolio() {
     return (
@@ -6,7 +7,7 @@ export default function AuthorPortfolio() {
             <div className="container1">
                 <div className="leftPanel">
                     <div>
-                        <img src='./src/assets/Logo.jpg' alt="Profile" className="image" />
+                        <img src={logo} alt="Profile" className="image" />
                     </div>
                     <div>
                         <button

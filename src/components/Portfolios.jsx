@@ -32,7 +32,7 @@ export default function Portfolios() {
 
     return (
         <div className='mt-3'>
-        <a href="/author-portfolio">
+        <Link to="/author-portfolio">
                         <div className="card mb-3 mx-5 lists" >
                             <div className="row g-0">
                                 <div className="col-md-2">
@@ -51,7 +51,7 @@ export default function Portfolios() {
                                 </div>
                             </div>
                         </div>
-                    </a>
+                    </Link>
         {portfolios.map((portfolio, index) => {
             return(
                 <Link to={`/portfolio/${portfolio.id}`} key={portfolio.id}>
