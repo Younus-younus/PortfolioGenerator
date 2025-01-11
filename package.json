@@ -8,13 +8,14 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "nodemon src/api/app.js"
+    "start": "nodemon src/api/app.js",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-react": "^7.26.3",
-    "@prisma/client": "^6.1.0",
+    "@prisma/client": "^6.2.1",
     "axios": "^1.7.9",
     "babel-loader": "^9.2.1",
     "bcrypt": "^5.1.1",
