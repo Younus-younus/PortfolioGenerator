@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "start": "nodemon src/api/app.js",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "deploy": "vite build && gh-pages -d dist"
   },
   "dependencies": {
     "@babel/core": "^7.26.0",
