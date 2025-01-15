@@ -8,7 +8,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <React.StrictMode>
         <AuthProvider>
-        <BrowserRouter future={{ v7_relativeSplatPath: true }} basename="/PortfolioGenerator">
+        <BrowserRouter future={{ v7_relativeSplatPath: true }} basename="/younus-younus.github.io/">
                 <App />
             </BrowserRouter>
         </AuthProvider>
