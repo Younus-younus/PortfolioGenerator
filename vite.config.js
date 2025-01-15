@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  base: '/younus-younus.github.io/',
+  base: '/younus-younus.github.io/PortfolioGenerator/',
   plugins: [react()],
   server: {
     proxy: {
