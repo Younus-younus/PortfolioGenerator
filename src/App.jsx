@@ -13,7 +13,7 @@ function App() {
     return (
         <>
             <NavBar />
-            <Routes>
+            <Routes basename="/PortfolioGenerator">
                 <Route path="/" element={<HomePage />} />
                 <Route path="/portfolios" element={<Portfolios />} /> {/* Change path */}
                 <Route path="/author-portfolio" element={<AuthorPortfolio />} />
