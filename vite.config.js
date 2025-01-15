@@ -4,9 +4,6 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   base: '/younus-younus.github.io/',
   plugins: [react()],
-  optimizeDeps: {
-    include: ['react-router-dom'],
-  },
   server: {
     proxy: {
       '/api': {
